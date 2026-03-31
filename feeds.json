@@ -1456,6 +1456,21 @@
       "htmlUrl": "https://ahmaddaly.wordpress.com"
     },
     {
+      "title": "",
+      "xmlUrl": "http://www.macdrifter.com/feeds/rss.xml",
+      "htmlUrl": ""
+    },
+    {
+      "title": "",
+      "xmlUrl": "https://www.entej.com/rss/id_1/",
+      "htmlUrl": ""
+    },
+    {
+      "title": "",
+      "xmlUrl": "https://www.imtidadblog.com/feed/",
+      "htmlUrl": ""
+    },
+    {
       "title": "الادب الامريكى American literature",
       "xmlUrl": "http://americanliteraturea.blogspot.com/feeds/posts/default",
       "htmlUrl": "http://americanliteraturea.blogspot.com/"
@@ -2906,6 +2921,16 @@
       "title": "Systems and Computing (e-ISSN: 3088-7941) Systems and Computing (SyCom) is an international, peer-reviewed, open-access journal launched in 2025. The journal publishes contributions covering both theoretical and practical aspects of systems theory and computing, with a particular focus on modern, intelligent, and emerging systems and architectures. The journal is published online only and operates under a no-fee policy for both authors and readers. It is issued biannually, in January and July, by Echahid Cheikh Larbi Tebessi University – Tebessa, Algeria (LAMIS Laboratory). In addition to regular issues, the journal publishes special issues dedicated to selected conferences, emerging research topics, and invited contributions from leading researchers. Systems and Computing is indexed in multiple international databases, ensuring high visibility, accessibility, and wide dissemination of published research worldwide. The journal is committed to maintaining high standards of peer review, publication ethics, and academic integrity, in accordance with international best practices.  For Authors Authors are encouraged to carefully review the following sections prior to manuscript submission:  Aims and Scope Author Guidelines Peer Review Policy Publication Ethics  Manuscripts that do not comply with the journal’s guidelines may be returned to the authors for revision prior to peer review.",
       "xmlUrl": "https://sycom.lab-lamis-univ-tebessa.dz/index.php/sycom/gateway/plugin/WebFeedGatewayPlugin/atom",
       "htmlUrl": ""
+    },
+    {
+      "title": "",
+      "xmlUrl": "https://www.journalofplayinadulthood.org.uk/feed/",
+      "htmlUrl": ""
+    },
+    {
+      "title": "",
+      "xmlUrl": "https://journals.univ-temouchent.edu.dz/index.php/RAL/gateway/plugin/WebFeedGatewayPlugin/atom",
+      "htmlUrl": ""
     }
   ],
   "كتب وقراءات": [
@@ -4164,23 +4189,6 @@
       "htmlUrl": "https://ilaba.wordpress.com"
     }
   ],
-  "منتديات": [
-    {
-      "title": "Mr. Money Mustache",
-      "xmlUrl": "http://feeds.feedburner.com/MrMoneyMustache",
-      "htmlUrl": "https://www.mrmoneymustache.com"
-    },
-    {
-      "title": "FeedWind Support",
-      "xmlUrl": "http://feed.mikle.com/support/rss/",
-      "htmlUrl": "https://feed.mikle.com/support/feed/Information%20about%20Feedwind%20features%20and%20functionality"
-    },
-    {
-      "title": "شبكة الألوكة",
-      "xmlUrl": "http://www.alukah.net/RSS/Rss-Feeds.aspx",
-      "htmlUrl": "http://www.alukah.net"
-    }
-  ],
   "مجلات": [
     {
       "title": "الثقافية التونسية",
@@ -4196,6 +4204,33 @@
       "title": "مجلة غريب",
       "xmlUrl": "http://ghareebmagazine.blogspot.com/feeds/posts/default",
       "htmlUrl": "https://ghareebmagazine.blogspot.com/"
+    },
+    {
+      "title": "",
+      "xmlUrl": "https://www.aljadeedmagazine.com/rss.xml",
+      "htmlUrl": ""
+    },
+    {
+      "title": "",
+      "xmlUrl": "https://www.wasla.anhri.net/?feed=rss2",
+      "htmlUrl": ""
+    }
+  ],
+  "منتديات": [
+    {
+      "title": "Mr. Money Mustache",
+      "xmlUrl": "http://feeds.feedburner.com/MrMoneyMustache",
+      "htmlUrl": "https://www.mrmoneymustache.com"
+    },
+    {
+      "title": "FeedWind Support",
+      "xmlUrl": "http://feed.mikle.com/support/rss/",
+      "htmlUrl": "https://feed.mikle.com/support/feed/Information%20about%20Feedwind%20features%20and%20functionality"
+    },
+    {
+      "title": "شبكة الألوكة",
+      "xmlUrl": "http://www.alukah.net/RSS/Rss-Feeds.aspx",
+      "htmlUrl": "http://www.alukah.net"
     }
   ],
   "مؤسسات": [
