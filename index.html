@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قارئ الخلاصات</title>
+<style>
+:root {
+  --bg: #fafaf9;
+  --fg: #1c1917;
+  --muted: #78716c;
+  --border: #e7e5e4;
+  --accent: #292524;
+  --card-bg: #ffffff;
+  --hover: #f5f5f4;
+  --cat-bg: #f5f5f4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c0a09;
+    --fg: #fafaf9;
+    --muted: #a8a29e;
+    --border: #292524;
+    --accent: #e7e5e4;
+    --card-bg: #1c1917;
+    --hover: #292524;
+    --cat-bg: #1c1917;
+  }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, 'Segoe UI', 'SF Pro Arabic', 'Noto Sans Arabic', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.last-updated {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.refresh-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--fg);
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.refresh-btn:hover { background: var(--hover); }
+.refresh-btn.loading { opacity: 0.5; pointer-events: none; }
+
+.stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.stats span { font-weight: 600; color: var(--fg); }
+
+.nav-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.nav-cat {
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  background: var(--cat-bg);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-cat:hover, .nav-cat.active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+.nav-cat .count {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-right: 0.3rem;
+}
+
+.category-section {
+  margin-bottom: 3rem;
+}
+
+.category-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.item {
+  display: block;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.1s;
+}
+.item:last-child { border-bottom: none; }
+
+.item-title {
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-bottom: 0.2rem;
+}
+.item:hover .item-title { color: var(--accent); text-decoration: underline; }
+
+.item-meta {
+  display: flex;
+  gap: 0.8rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.item-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 0.3rem;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.search-box {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  background: var(--card-bg);
+  color: var(--fg);
+  margin-bottom: 1.5rem;
+  outline: none;
+  transition: border 0.15s;
+}
+.search-box:focus { border-color: var(--accent); }
+.search-box::placeholder { color: var(--muted); }
+
+footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .container { padding: 1.2rem 1rem; }
+  header { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+  .header-meta { width: 100%; justify-content: space-between; }
+  .stats { flex-wrap: wrap; gap: 1rem; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>خلاصاتي</h1>
+    <div class="header-meta">
+      <span class="last-updated" id="lastUpdated"></span>
+      <button class="refresh-btn" id="refreshBtn" onclick="refreshData()">تحديث</button>
+    </div>
+  </header>
+
+  <input type="search" class="search-box" id="searchBox" placeholder="ابحث في العناوين..." oninput="filterItems()">
+
+  <div class="stats" id="stats"></div>
+  <div class="nav-cats" id="navCats"></div>
+  <div id="content"></div>
+
+  <footer>قارئ خلاصات RSS</footer>
+</div>
+<script>
+let DATA = null;
+let activeCategory = null;
+
+async function loadData() {
+  try {
+    const resp = await fetch('data.json?t=' + Date.now());
+    DATA = await resp.json();
+    render();
+  } catch (e) {
+    document.getElementById('content').innerHTML =
+      '<div class="empty-state">تعذر تحميل البيانات</div>';
+  }
+}
+
+function timeAgo(isoStr) {
+  if (!isoStr) return '';
+  const now = new Date();
+  const then = new Date(isoStr);
+  const diff = Math.floor((now - then) / 1000);
+  if (diff < 60) return 'الآن';
+  if (diff < 3600) return Math.floor(diff / 60) + ' د';
+  if (diff < 86400) return Math.floor(diff / 3600) + ' س';
+  if (diff < 604800) return Math.floor(diff / 86400) + ' ي';
+  return then.toLocaleDateString('ar');
+}
+
+function render() {
+  if (!DATA) return;
+  const cats = DATA.categories;
+  const catNames = Object.keys(cats);
+
+  // Stats
+  let totalItems = 0;
+  catNames.forEach(c => totalItems += cats[c].length);
+  document.getElementById('stats').innerHTML =
+    `<div><span>${totalItems}</span> مقال</div>` +
+    `<div><span>${catNames.length}</span> قسم</div>`;
+
+  // Last updated
+  if (DATA.lastUpdated) {
+    const d = new Date(DATA.lastUpdated);
+    document.getElementById('lastUpdated').textContent =
+      'آخر تحديث: ' + d.toLocaleString('ar', { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' });
+  }
+
+  // Category nav
+  let navHtml = `<button class="nav-cat ${!activeCategory ? 'active' : ''}" onclick="setCategory(null)">الكل</button>`;
+  catNames.forEach(cat => {
+    const count = cats[cat].length;
+    const isActive = activeCategory === cat ? 'active' : '';
+    navHtml += `<button class="nav-cat ${isActive}" onclick="setCategory('${cat.replace(/'/g, "\\'")}')">
+      ${cat} <span class="count">${count}</span>
+    </button>`;
+  });
+  document.getElementById('navCats').innerHTML = navHtml;
+
+  renderItems();
+}
+
+function renderItems() {
+  if (!DATA) return;
+  const cats = DATA.categories;
+  const query = (document.getElementById('searchBox').value || '').trim().toLowerCase();
+  const contentEl = document.getElementById('content');
+
+  let html = '';
+  const catsToShow = activeCategory ? [activeCategory] : Object.keys(cats);
+
+  catsToShow.forEach(cat => {
+    let items = cats[cat] || [];
+    if (query) {
+      items = items.filter(item =>
+        (item.title || '').toLowerCase().includes(query) ||
+        (item.source || '').toLowerCase().includes(query) ||
+        (item.description || '').toLowerCase().includes(query)
+      );
+    }
+    if (items.length === 0) return;
+
+    html += `<section class="category-section">
+      <div class="category-title">${cat}</div>
+      <div class="items-list">`;
+
+    items.forEach(item => {
+      const link = item.link || '#';
+      const title = item.title || 'بدون عنوان';
+      const source = item.source || '';
+      const time = timeAgo(item.pubDate);
+      const desc = item.description || '';
+
+      html += `<a class="item" href="${link}" target="_blank" rel="noopener">
+        <div class="item-title">${escHtml(title)}</div>
+        <div class="item-meta">
+          ${source ? `<span>${escHtml(source)}</span>` : ''}
+          ${time ? `<span>${time}</span>` : ''}
+        </div>
+        ${desc ? `<div class="item-desc">${escHtml(desc)}</div>` : ''}
+      </a>`;
+    });
+
+    html += '</div></section>';
+  });
+
+  if (!html) {
+    html = '<div class="empty-state">لا توجد مقالات</div>';
+  }
+
+  contentEl.innerHTML = html;
+}
+
+function escHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function setCategory(cat) {
+  activeCategory = cat;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function filterItems() {
+  renderItems();
+}
+
+async function refreshData() {
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('loading');
+  btn.textContent = 'جاري التحديث...';
+  await loadData();
+  btn.classList.remove('loading');
+  btn.textContent = 'تحديث';
+}
+
+loadData();
+</script>
+</body>
+</html>
